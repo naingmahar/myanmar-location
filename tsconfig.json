@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "esnext",
+        "lib": ["ES5","ES2015","ES6","ES2016","WebWorker","esnext"],
+        "declaration": true,
+        "rootDir": "./",
+        "outDir": "./build",
+        "allowJs": true,
+        "esModuleInterop": true,
+        "noImplicitAny": false
+    }
+}
+  

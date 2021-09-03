@@ -1,0 +1,17 @@
+{
+    "name":"MYANMAR",
+    "rootDir":"../src/",
+    "sourceFile":"index.ts",
+    "outputDir":"../web/",
+    "outputFile":"bundle.ts",
+    "importKey":[{"key":"import"}],
+    "clean":[
+        {"key":"import","var":true},
+        {"key":"export","var":false},
+        {"key":"exports","var":false},
+        {"key":"export default","var":false}
+    ],
+    "removeTypeFileAndIndexFile":[
+        "/data/township/index.ts"
+    ]
+}
