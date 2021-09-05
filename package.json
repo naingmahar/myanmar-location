@@ -1,24 +1,26 @@
 {
   "name": "@nmh/myanmar-location",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "A package for myanmar region and townships",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc --project ./",
     "build:web": "tsc --project ./web/bundle.ts"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-remove-import-export": "^1.1.1",
     "ts-node": "^9.0.0",
-    "typescript": "^4.0.2"
+    "typescript": "^4.4.2"
   },
   "author": "Naing Mahar",
   "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/naingmahar/myanmar-location.git"
+  },
+  "engines": {
+    "node": "8"
   },
   "bugs": {
     "url": "https://github.com/naingmahar/myanmar-location/issues"

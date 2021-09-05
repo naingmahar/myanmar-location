@@ -2204,6 +2204,25 @@ var getRegionByName = function (_a) {
             return row;
     });
 };
+var searchRegionByName = function (_a) {
+    var english = _a.english, myanmar = _a.myanmar;
+    var result = [];
+    Region.map(function (row) {
+        if (english) {
+            var ts = String(row.region_en)
+                .toLowerCase()
+                .search(english.toLowerCase());
+            if (ts !== -1)
+                result.push(row);
+        }
+        if (myanmar) {
+            var ts = row.region_mm.search(myanmar);
+            if (ts !== -1)
+                result.push(row);
+        }
+    });
+    return result;
+};
 var getRegionById = function (id) {
     return Region.find(function (row) { return row.id === id; });
 };
@@ -2227,11 +2246,30 @@ var getDistrictByName = function (_a) {
             return row;
     });
 };
+var searchDistrictByName = function (_a) {
+    var english = _a.english, myanmar = _a.myanmar;
+    var result = [];
+    District.map(function (row) {
+        if (english) {
+            var ts = String(row.district_en)
+                .toLowerCase()
+                .search(english.toLowerCase());
+            if (ts !== -1)
+                result.push(row);
+        }
+        if (myanmar) {
+            var ts = row.district_mm.search(myanmar);
+            if (ts !== -1)
+                result.push(row);
+        }
+    });
+    return result;
+};
 var getDistrictById = function (id) {
     return District.find(function (row) { return row.id === id; });
 };
 var getDistrictByRegionId = function (region_id) {
-    return District.find(function (row) { return row.region_id === region_id; });
+    return District.filter(function (row) { return row.region_id === region_id; });
 };
 var getAllTownships = function () {
     var newArr = [];
@@ -2297,7 +2335,7 @@ var getTownshipsByDistrictId = function (district_id) {
     var district = getDistrictById(district_id);
     var regionName = getRegionIdToName(district.region_id);
     var townships = Townships[regionName];
-    return townships.find(function (row) {
+    return townships.filter(function (row) {
         if (row.district_id === district_id)
             return row;
     });
@@ -2332,7 +2370,33 @@ var getTownshipsByRegionId = function (region_id) {
         .toUpperCase();
     return Townships[regionKey];
 };
+var searchTownshipFullInfoByName = function (_a) {
+    var english = _a.english, myanmar = _a.myanmar;
+    var res = [];
+    var searchRes = searchTownships({ english: english, myanmar: myanmar });
+    searchRes.map(function (row) {
+        var temp = { township: row };
+        var district = getDistrictById(row.district_id);
+        var region = getRegionById(district.region_id);
+        temp["district"] = district;
+        temp["region"] = region;
+        res.push(temp);
+    });
+    return res;
+};
+var getRegionAndDistrictByDistrictId = function (id) {
+    try {
+        var _id = parseInt(String(id));
+        var district = getDistrictById(_id);
+        var region = getRegionById(district.region_id);
+        return { district: district, region: region };
+    }
+    catch (error) {
+        return new Error(error.message || "Unexpected Error");
+    }
+};
 var MYANMAR = {
+    searchRegionByName: searchRegionByName,
     getAllRegion: getAllRegion,
     getRegionByName: getRegionByName,
     getRegionById: getRegionById,
@@ -2348,5 +2412,8 @@ var MYANMAR = {
     getTownshipsByDistrictId: getTownshipsByDistrictId,
     searchTownshipsByRegionId: searchTownshipsByRegionId,
     searchTownshipsByRegionName: searchTownshipsByRegionName,
-    searchTownships: searchTownships
+    searchTownships: searchTownships,
+    searchDistrictByName: searchDistrictByName,
+    getRegionAndDistrictByDistrictId: getRegionAndDistrictByDistrictId,
+    searchTownshipFullInfoByName: searchTownshipFullInfoByName
 };

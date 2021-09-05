@@ -3,16 +3,484 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="./web/bundle.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="res/jquery.json-viewer.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Myanmar Location</title>
+    <script src="https://myanmar-location.s3.ap-southeast-1.amazonaws.com/bundle.js"></script>
+    <script src="./res/jquery.json-viewer.js" type="text/javascript"></script>
+    
 </head>
 <body>
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h3>Myanmar Location Tools</h3>
+
+            <div class="container">
+                <br />
+                <br />
+                <!-- <h4>Information</h4> -->
+                <!-- <p>The total number of Regions or States, Districts and Townships</p>             -->
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Total Regions or States</th>
+                      <th>Total Districts </th>
+                      <th>Total Townships</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td id="region-count"></td>
+                      <td id="district-count"></td>
+                      <td id="township-count"></td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="sel1">Select English:</label>
+                            <select class="form-control" id="sel1">
+                            </select>
+                          </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="sel2">Select Myanmar:</label>
+                            <select class="form-control" id="sel2">
+                            </select>
+                          </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6" >
+                        <div class="list-group" id="districts-en"></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="list-group" id="districts-mm"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        
+    </div>
+
+    <div class="container">
+        
+        <!-- The Modal -->
+        <div class="modal fade" id="myModal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title"> Townships</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body" id="township-modal">
+
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
     
+
+      <div class="container-fluid">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get All Region</h5>
+                    <span>code ==> MYANMAR.getAllRegion()</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo1">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo1" class="collapse">
+                <pre id="getAllRegion"></pre>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Search Region By Name ({english , myanmar})</h5>
+                    <span>code ==> MYANMAR.searchRegionByName({</span>
+                    <input type="text" id="inp-demo2-en" style="border: 0;width: '50%';" />
+                    <span>,</span>
+                    <input type="text" id="inp-demo2-mm" style="border: 0;width: '50%';" />
+                    <span>})</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo2">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo2" class="collapse">
+                <pre id="searchRegionByName"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get All Districts</h5>
+                    <span>code ==> MYANMAR.getAllDistricts()</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo3">Show / Hide</button>
+                </div>
+            </div>
+    
+            <br />
+            
+            <div id="demo3" class="collapse">
+                <pre id="getAllDistricts"></pre>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Search Districts By Name ({english , myanmar})</h5>
+                    <span>MYANMAR.searchDistrictByName({english:</span>
+                    <input type="text" id="inp-demo4-en" style="border: 0;width: '50%';" />
+                    <span>,myanmar:</span>
+                    <input type="text" id="inp-demo4-mm" style="border: 0;width: '50%';" />
+                    <span>})</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo4">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo4" class="collapse">
+                <pre id="searchDistrictByName"></pre>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get All Districts By Region Group</h5>
+                    <span>code ==> MYANMAR.getAllDistrictsByRegionGroup()</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo5">Show / Hide</button>
+                </div>
+            </div>
+    
+            <br />
+            
+            <div id="demo5" class="collapse">
+                <pre id="getAllDistrictsByRegionGroup"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get District By Region Id</h5>
+                    <span>MYANMAR.getDistrictByRegionId(</span>
+                    <input type="text" id="inp-demo6" style="border: 0;width: '50%';" />
+                    <span>)</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo6">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo6" class="collapse">
+                <pre id="getDistrictByRegionId"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Search Townships By Name ({english , myanmar})</h5>
+                    <span>MYANMAR.searchTownships({english:</span>
+                    <input type="text" id="inp-demo7-en" style="border: 0;width: '50%';" />
+                    <span>,myanmar:</span>
+                    <input type="text" id="inp-demo7-mm" style="border: 0;width: '50%';" />
+                    <span>})</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo7">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo7" class="collapse">
+                <pre id="searchTownships"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get Townships By Region Id</h5>
+                    <span>MYANMAR.getTownshipsByRegionId(</span>
+                    <input type="text" id="inp-demo8" style="border: 0;width: '50%';" />
+                    <span>)</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo8">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo8" class="collapse">
+                <pre id="getTownshipsByRegionId"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get Townships By District Id</h5>
+                    <span>MYANMAR.getTownshipsByDistrictId(</span>
+                    <input type="text" id="inp-demo9" style="border: 0;width: '50%';" />
+                    <span>)</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo9">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo9" class="collapse">
+                <pre id="getTownshipsByDistrictId"></pre>
+            </div>
+        </div>
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Get Region And District By District Id</h5>
+                    <span>MYANMAR.getRegionAndDistrictByDistrictId(</span>
+                    <input type="text" id="inp-demo10" style="border: 0;width: '50%';" />
+                    <span>)</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo10">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo10" class="collapse">
+                <pre id="getRegionAndDistrictByDistrictId"></pre>
+            </div>
+        </div>
+
+
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-sm-10" >
+                    <h5>Search Townships Full Info By Name ({english , myanmar})</h5>
+                    <span>MYANMAR.searchTownshipFullInfoByName({english:</span>
+                    <input type="text" id="inp-demo11-en" style="border: 0;width: '50%';" />
+                    <span>,myanmar:</span>
+                    <input type="text" id="inp-demo11-mm" style="border: 0;width: '50%';" />
+                    <span>})</span>
+                </div>
+                <div class="col-sm-2">
+                    <button data-toggle="collapse" data-target="#demo11">Show / Hide</button>
+                </div>
+            </div>
+
+            <br />
+            
+            <div id="demo11" class="collapse">
+                <pre id="searchTownshipFullInfoByName"></pre>
+            </div>
+        </div>
+
+        
+
+
+      </div>
+
+      <pre id="json-renderer"></pre>
+
+      
+
 </body>
+
 <script>
-    console.log(getAllRegion())
-    console.log(MYANMAR.getRegionByName({english:"Mon State"}))
-    console.log(MYANMAR.searchTownships({english:"DAGON"}))
+    $(document).ready(function(){
+        $("#getAllRegion").jsonViewer(MYANMAR.getAllRegion())
+        $("#getAllDistricts").jsonViewer(MYANMAR.getAllDistricts())
+        $("#getAllDistrictsByRegionGroup").jsonViewer(MYANMAR.getAllDistrictsByRegionGroup())
+        
+        
+        $("#inp-demo2-en").on("input",()=>{
+                let $val_en = $("#inp-demo2-en").val()
+                let $val_mm = $("#inp-demo2-mm").val()
+                $("#searchRegionByName")
+                    .jsonViewer(MYANMAR.searchRegionByName({english:$val_en}))
+        })
+
+        $("#inp-demo2-mm").on("input",()=>{
+                let $val_mm = $("#inp-demo2-mm").val()
+                $("#searchRegionByName")
+                    .jsonViewer(MYANMAR.searchRegionByName({myanmar:$val_mm}))
+        })
+
+        $("#inp-demo4-en").on("input",()=>{
+                let $val_en = $("#inp-demo4-en").val()
+                $("#searchDistrictByName")
+                    .jsonViewer(MYANMAR.searchDistrictByName({english:$val_en}))
+        })
+
+        $("#inp-demo4-mm").on("input",()=>{
+                let $val_mm = $("#inp-demo4-mm").val()
+                $("#searchDistrictByName")
+                    .jsonViewer(MYANMAR.searchDistrictByName({myanmar:$val_mm}))
+        })
+
+        $("#inp-demo6").on("input",()=>{
+                let $val_ID = $("#inp-demo6").val()
+                $("#getDistrictByRegionId")
+                    .jsonViewer(MYANMAR.getDistrictByRegionId(parseInt($val_ID)))
+        })
+
+        $("#inp-demo7-en").on("input",()=>{
+                let $val_en = $("#inp-demo7-en").val()
+                $("#searchTownships")
+                    .jsonViewer(MYANMAR.searchTownships({english:$val_en}))
+        })
+
+        $("#inp-demo7-mm").on("input",()=>{
+                let $val_mm = $("#inp-demo7-mm").val()
+                $("#searchTownships")
+                    .jsonViewer(MYANMAR.searchTownships({myanmar:$val_mm}))
+        })
+
+        $("#inp-demo8").on("input",()=>{
+                let $val_ID = $("#inp-demo8").val()
+                $("#getTownshipsByRegionId")
+                    .jsonViewer(MYANMAR.getTownshipsByRegionId(parseInt($val_ID)))
+        })
+
+        $("#inp-demo9").on("input",()=>{
+                let $val_ID = $("#inp-demo9").val()
+                $("#getTownshipsByDistrictId")
+                    .jsonViewer(MYANMAR.getTownshipsByDistrictId(parseInt($val_ID)))
+        })
+
+        $("#inp-demo10").on("input",()=>{
+                let $val_ID = $("#inp-demo10").val()
+                $("#getRegionAndDistrictByDistrictId")
+                    .jsonViewer(MYANMAR.getRegionAndDistrictByDistrictId(parseInt($val_ID)))
+        })  
+
+        $("#inp-demo11-en").on("input",()=>{
+                let $val_en = $("#inp-demo11-en").val()
+                $("#searchTownshipFullInfoByName")
+                    .jsonViewer(MYANMAR.searchTownshipFullInfoByName({english:$val_en}))
+        })
+
+        $("#inp-demo11-mm").on("input",()=>{
+                let $val_mm = $("#inp-demo11-mm").val()
+                $("#searchTownshipFullInfoByName")
+                    .jsonViewer(MYANMAR.searchTownshipFullInfoByName({myanmar:$val_mm}))
+        })
+    })
+</script>
+<script>
+    onSelect = (id,lang) => {
+            console.log("Id",getTownshipsByDistrictId(id))
+            $("#township-modal").html(
+                getTownshipsByDistrictId(id).map(row=>{
+                    return (
+                        `<div class="row">
+                            <div class="col-sm-6" >
+                                <h6>${row.township_en}</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <h6>${row.township_mm}</h6>
+                            </div>
+                        </div>`
+                    )
+                })
+            )
+    }
+</script>
+<script>
+    $(document).ready(function(){
+        let lang = "en"
+        let regionId = 0
+
+        const setDistricts = (regionId) =>{
+            $("#districts-en").html(getDistrictByRegionId(parseInt(regionId)).map(row=>{
+                return `<a class="list-group-item list-group-item-action" href="#"  data-toggle="modal" data-target="#myModal" onClick="onSelect(${row.id})">${row.district_en}</li>`
+            }))
+            $("#districts-mm").html(getDistrictByRegionId(parseInt(regionId)).map(row=>{
+                return `<a class="list-group-item list-group-item-action"  href="#"  data-toggle="modal" data-target="#myModal">${row.district_mm}</li>`
+            }))
+        }
+
+        $("#region-count").html(MYANMAR.getAllRegion().length)
+        $("#district-count").html(getAllDistricts().length)
+        $("#township-count").html(getAllTownships().length)
+
+        $("#sel1").html(MYANMAR.getAllRegion().map(region=>`<option value=${region.id}>${region.region_en}</option>`))
+        $("#sel2").html(MYANMAR.getAllRegion().map(region=>`<option value=${region.id}>${region.region_mm}</option>`))
+        setDistricts(1)
+        $("#sel1").change(function() {
+            let $option = $(this).find('option:selected');
+            regionId = $option.val()
+            setDistricts(regionId)
+        })
+
+        $("#sel2").change(function() {
+            let $option = $(this).find('option:selected');
+            regionId = $option.val()
+            setDistricts(regionId)
+        })
+        
+        
+        // console.log(getAllRegion().length)
+    });
+    // console.log(MYANMAR.getRegionByName({english:"Mon State"}))
+    // console.log(MYANMAR.searchTownships({english:"DAGON"}))
 </script>
 </html>

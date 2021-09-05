@@ -32,6 +32,24 @@ const getRegionByName = ({ english, myanmar }) => {
             return row;
     });
 };
+const searchRegionByName = ({ english, myanmar }) => {
+    let result = [];
+    region_1.default.map((row) => {
+        if (english) {
+            let ts = String(row.region_en)
+                .toLowerCase()
+                .search(english.toLowerCase());
+            if (ts !== -1)
+                result.push(row);
+        }
+        if (myanmar) {
+            let ts = row.region_mm.search(myanmar);
+            if (ts !== -1)
+                result.push(row);
+        }
+    });
+    return result;
+};
 const getRegionById = (id) => {
     return region_1.default.find((row) => row.id === id);
 };
@@ -54,11 +72,29 @@ const getDistrictByName = ({ english, myanmar }) => {
             return row;
     });
 };
+const searchDistrictByName = ({ english, myanmar }) => {
+    let result = [];
+    district_1.default.map((row) => {
+        if (english) {
+            let ts = String(row.district_en)
+                .toLowerCase()
+                .search(english.toLowerCase());
+            if (ts !== -1)
+                result.push(row);
+        }
+        if (myanmar) {
+            let ts = row.district_mm.search(myanmar);
+            if (ts !== -1)
+                result.push(row);
+        }
+    });
+    return result;
+};
 const getDistrictById = (id) => {
     return district_1.default.find((row) => row.id === id);
 };
 const getDistrictByRegionId = (region_id) => {
-    return district_1.default.find((row) => row.region_id === region_id);
+    return district_1.default.filter((row) => row.region_id === region_id);
 };
 const getAllTownships = () => {
     let newArr = [];
@@ -72,7 +108,7 @@ const searchTownships = ({ english, myanmar }) => {
         if (english) {
             let ts = String(row.township_en)
                 .toLowerCase()
-                .search(english);
+                .search(english.toLowerCase());
             if (ts !== -1)
                 result.push(row);
         }
@@ -99,7 +135,7 @@ const searchTownshipsByRegionName = (region, { english, myanmar }) => {
         if (english) {
             let ts = String(row.township_en)
                 .toLowerCase()
-                .search(english);
+                .search(english.toLowerCase());
             if (ts !== -1)
                 result.push(row);
         }
@@ -121,7 +157,7 @@ const getTownshipsByDistrictId = (district_id) => {
     const district = getDistrictById(district_id);
     const regionName = getRegionIdToName(district.region_id);
     const townships = index_1.default[regionName];
-    return townships.find((row) => {
+    return townships.filter((row) => {
         if (row.district_id === district_id)
             return row;
     });
@@ -156,7 +192,32 @@ const getTownshipsByRegionId = (region_id) => {
         .toUpperCase();
     return index_1.default[regionKey];
 };
+const searchTownshipFullInfoByName = ({ english, myanmar }) => {
+    let res = [];
+    const searchRes = searchTownships({ english, myanmar });
+    searchRes.map((row) => {
+        let temp = { township: row };
+        let district = getDistrictById(row.district_id);
+        let region = getRegionById(district.region_id);
+        temp["district"] = district;
+        temp["region"] = region;
+        res.push(temp);
+    });
+    return res;
+};
+const getRegionAndDistrictByDistrictId = (id) => {
+    try {
+        let _id = parseInt(String(id));
+        let district = getDistrictById(_id);
+        let region = getRegionById(district.region_id);
+        return { district, region };
+    }
+    catch (error) {
+        return new Error(error.message || "Unexpected Error");
+    }
+};
 exports.default = {
+    searchRegionByName,
     getAllRegion,
     getRegionByName,
     getRegionById,
@@ -173,4 +234,7 @@ exports.default = {
     searchTownshipsByRegionId,
     searchTownshipsByRegionName,
     searchTownships,
+    searchDistrictByName,
+    getRegionAndDistrictByDistrictId,
+    searchTownshipFullInfoByName
 };

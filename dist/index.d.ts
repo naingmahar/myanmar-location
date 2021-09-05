@@ -31,6 +31,7 @@ declare type TGetByName = {
     myanmar?: string;
 };
 declare const _default: {
+    searchRegionByName: ({ english, myanmar }: TGetByName) => any[];
     getAllRegion: () => {
         id: number;
         region_en: string;
@@ -69,7 +70,7 @@ declare const _default: {
         district_en: string;
         district_mm: string;
         region_id: number;
-    };
+    }[];
     getAllDistrictsByRegionGroup: () => {
         [key: string]: [IDisrict];
     };
@@ -242,9 +243,24 @@ declare const _default: {
         district_id: string;
     })[];
     getTownshipsByRegionId: (region_id: number) => any;
-    getTownshipsByDistrictId: (district_id: any) => ITownship;
+    getTownshipsByDistrictId: (district_id: any) => ITownship[];
     searchTownshipsByRegionId: (region_id: number, { english, myanmar }: TGetByName) => any[];
     searchTownshipsByRegionName: (region: String | ERegions, { english, myanmar }: TGetByName) => any[];
-    searchTownships: ({ english, myanmar }: TGetByName) => any[];
+    searchTownships: ({ english, myanmar }: TGetByName) => ITownship[];
+    searchDistrictByName: ({ english, myanmar }: TGetByName) => any[];
+    getRegionAndDistrictByDistrictId: (id: string | number) => Error | {
+        district: {
+            id: number;
+            district_en: string;
+            district_mm: string;
+            region_id: number;
+        };
+        region: {
+            id: number;
+            region_en: string;
+            region_mm: string;
+        };
+    };
+    searchTownshipFullInfoByName: ({ english, myanmar }: TGetByName) => any[];
 };
 export default _default;

@@ -2231,6 +2231,12 @@ interface ITownship {
     district_id: number 
 }
 
+interface IRegion {
+    id : number
+    region_en: string
+    region_mm: string
+}
+
 type TGetByName = { english?: string, myanmar?: string }
 
 const getAllRegion = () => {
@@ -2244,7 +2250,24 @@ const getRegionByName = ({ english,myanmar}:TGetByName) => {
     })
 }
 
-const getRegionById = (id:number) => {
+const searchRegionByName = ({ english, myanmar }: TGetByName) => {
+    let result = []
+    Region.map((row) => {
+        if (english) {
+            let ts = String(row.region_en)
+                        .toLowerCase()
+                        .search(english.toLowerCase())
+            if(ts !== -1) result.push(row)
+        }
+        if (myanmar) {
+            let ts = row.region_mm.search(myanmar)
+            if(ts !== -1) result.push(row)
+        }
+    })
+    return result
+}
+
+const getRegionById = (id: number) => {
     return Region.find((row) => row.id === id)
 }
 
@@ -2269,12 +2292,29 @@ const getDistrictByName = ({ english,myanmar}:TGetByName) => {
     })
 }
 
+const searchDistrictByName = ({ english, myanmar }: TGetByName) => {
+    let result = []
+    District.map((row) => {
+        if (english) {
+            let ts = String(row.district_en)
+                        .toLowerCase()
+                        .search(english.toLowerCase())
+            if(ts !== -1) result.push(row)
+        }
+        if (myanmar) {
+            let ts = row.district_mm.search(myanmar)
+            if(ts !== -1) result.push(row)
+        }
+    })
+    return result
+}
+
 const getDistrictById = (id:number) => {
     return District.find((row) => row.id === id)
 }
 
 const getDistrictByRegionId = (region_id:number) => {
-    return District.find((row) => row.region_id === region_id)
+    return District.filter((row) => row.region_id === region_id)
 }
 
 const getAllTownships = ():ITownship[] => {
@@ -2283,7 +2323,7 @@ const getAllTownships = ():ITownship[] => {
     return newArr
 }
 
-const searchTownships = ({ english,myanmar}:TGetByName) => {
+const searchTownships = ({ english,myanmar}:TGetByName):ITownship[] => {
     let townships = getAllTownships()
     let result = []
     townships.map((row) => {
@@ -2339,7 +2379,7 @@ const getTownshipsByDistrictId = (district_id) => {
     const district = getDistrictById(district_id)
     const regionName = getRegionIdToName(district.region_id)
     const townships: ITownship[] = Townships[regionName]
-    return townships.find((row) => {
+    return townships.filter((row) => {
         if (row.district_id === district_id )
             return row
     })
@@ -2378,7 +2418,37 @@ const getTownshipsByRegionId = (region_id: number) => {
     return Townships[regionKey]
 }
 
+const searchTownshipFullInfoByName = ({ english, myanmar }: TGetByName) => {
+    let res= []
+    const searchRes = searchTownships({ english, myanmar })
+    searchRes.map((row) => {
+        let temp: { township: ITownship, district?: IDisrict, region?: IRegion } = {township:row};
+        let district = getDistrictById(row.district_id)
+        let region = getRegionById(district.region_id)
+        temp["district"] = district
+        temp["region"] = region
+
+        res.push(temp)
+    })
+
+    return res
+}
+
+const getRegionAndDistrictByDistrictId = (id:number|string) => {
+    try {
+        let _id = parseInt(String(id))
+        let district = getDistrictById(_id)
+        let region = getRegionById(district.region_id)
+        return { district, region }
+    } catch (error) {
+        return new Error(error.message||"Unexpected Error")
+    }
+}
+
+
+
 let MYANMAR =  {
+    searchRegionByName,
     getAllRegion,
     getRegionByName,
     getRegionById,
@@ -2395,5 +2465,8 @@ let MYANMAR =  {
     searchTownshipsByRegionId,
     searchTownshipsByRegionName,
     searchTownships,
+    searchDistrictByName,
+    getRegionAndDistrictByDistrictId,
+    searchTownshipFullInfoByName
 }
 
