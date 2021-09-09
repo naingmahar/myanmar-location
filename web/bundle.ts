@@ -98,17 +98,17 @@ let SAGAING =  [{
   "id": 20,
   "township_en": "Tamu",
   "township_mm": "တမူး",
-  "district_id": ""
+  "district_id": 53
 }, {
   "id": 21,
   "township_en": "Chaung-U",
   "township_mm": "ချောင်းဦး",
-  "district_id": 53
+  "district_id": 54
 }, {
   "id": 22,
   "township_en": "Budalin",
   "township_mm": "ဘုတလင်",
-  "district_id": ""
+  "district_id": 54
 }, {
   "id": 23,
   "township_en": "Monywa",
@@ -123,17 +123,17 @@ let SAGAING =  [{
   "id": 25,
   "township_en": "Paungbyin",
   "township_mm": "ဖောင်းပြင်",
-  "district_id": 54
+  "district_id": 55
 }, {
   "id": 26,
   "township_en": "Mawlaik",
   "township_mm": "မော်လိုက်",
-  "district_id": 5455
+  "district_id": 55
 }, {
   "id": 27,
   "township_en": "Kani",
   "township_mm": "ကနီ",
-  "district_id": 5556
+  "district_id": 56
 }, {
   "id": 28,
   "township_en": "Salingyi",
@@ -148,7 +148,7 @@ let SAGAING =  [{
   "id": 30,
   "township_en": "Yinmabin",
   "township_mm": "ယင်းမာပင်",
-  "district_id": 5657
+  "district_id": 56
 }, {
   "id": 31,
   "township_en": "Khin-U",
@@ -178,7 +178,7 @@ let SAGAING =  [{
   "id": 36,
   "township_en": "Ye-U",
   "township_mm": "ရေဦး",
-  "district_id": 58
+  "district_id": 57
 }, {
   "id": 37,
   "township_en": "Nanyun",
@@ -193,7 +193,7 @@ let SAGAING =  [{
   "id": 39,
   "township_en": "Leshi",
   "township_mm": "လေရှီး",
-  "district_id": ""
+  "district_id": 58
 }]
 let MANDALAY =  [{
   "id": 1,
