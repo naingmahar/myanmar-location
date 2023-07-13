@@ -2,7 +2,7 @@
 
 Support Web , Js and Ts .
 
-<a href="doc:introduction" target="_blank">Myanmar Location Demo Website</a>
+<a href="https://d10mjdj7odx61f.cloudfront.net/" target="_blank">Myanmar Location Demo Website</a>
 
 ### Installation Web
 
