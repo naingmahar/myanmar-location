@@ -2,6 +2,8 @@
 
 Support Web , Js and Ts .
 
+<a href="doc:introduction" target="_blank">Introduction</a>
+
 ### Installation Web
 
 ```sh
