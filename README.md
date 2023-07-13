@@ -2,7 +2,7 @@
 
 Support Web , Js and Ts .
 
-<a href="doc:introduction" target="_blank">Introduction</a>
+<a href="doc:introduction" target="_blank">Myanmar Location Demo Website</a>
 
 ### Installation Web
 
